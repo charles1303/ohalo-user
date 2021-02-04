@@ -40,15 +40,14 @@ public class EmployeeController {
 	public AppResponse<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto employeeDto)
 			throws IllegalArgumentException, JsonProcessingException, NoSuchAlgorithmException {
 		log.info("createEmployee employeeDto.getId()==== {}", employeeDto.getId());
-		log.info("createEmployee employeeDto.getSocSecNumber()==== {} ", employeeDto.getSocSecNumber());
-
+		
 		return getResponse(employeeService.saveEmployee(employeeDto));
 	}
 
 	@PutMapping("{id}")
-	public AppResponse<EmployeeDto> updateEmployee(@Valid @RequestBody EmployeeDto employeeDto)
+	public AppResponse<EmployeeDto> updateEmployee(@Valid @RequestBody EmployeeDto employeeDto, @PathVariable Long id)
 			throws IllegalArgumentException, JsonProcessingException, NoSuchAlgorithmException {
-		return getResponse(employeeService.saveEmployee(employeeDto));
+		return getResponse(employeeService.updateEmployee(employeeDto, id));
 	}
 
 	@DeleteMapping("{id}")

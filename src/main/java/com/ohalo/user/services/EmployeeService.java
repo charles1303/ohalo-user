@@ -34,8 +34,7 @@ public class EmployeeService {
 	public EmployeeDto saveEmployee(EmployeeDto employeeDto)
 			throws IllegalArgumentException, JsonProcessingException, NoSuchAlgorithmException {
 		log.info("saveEmployee employeeDto.getId()==== {} ", employeeDto.getId());
-		log.info("saveEmployee employeeDto.getSocSecNumber()==== {} ", employeeDto.getSocSecNumber());
-
+		
 		Employee emp = createEntity(employeeDto);
 		employeeRepo.save(emp);
 		employeeLogService.saveEmployeeLog(employeeDto);
@@ -102,8 +101,7 @@ public class EmployeeService {
 		}
 
 		log.info("employeeDto employeeDto.getId()==== {} ", employeeDto.getId());
-		log.info("employeeDto employeeDto.getSocSecNumber()==== {} ", employeeDto.getSocSecNumber());
-
+		
 		emp.setFirstName(employeeDto.getFirstName());
 		emp.setLastName(employeeDto.getLastName());
 		emp.setStartDate(employeeDto.getStartDate());
