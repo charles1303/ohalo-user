@@ -1,0 +1,46 @@
+version: '3.7'
+networks:
+  backend:
+   name: app
+   driver: bridge
+volumes:
+  postgres-data:
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: web-app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./appconfigs/:/config/
+    networks:
+      - backend
+    depends_on:
+      - db
+    healthcheck:
+      test: curl -f http://localhost:8080/employees || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 2
+  db:
+    image: postgres:12
+    container_name: postgres-db
+    restart: always
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ohalo
+      PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 1m
+      timeout: 10s
+      retries: 2

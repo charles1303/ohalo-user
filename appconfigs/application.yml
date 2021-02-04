@@ -1,0 +1,22 @@
+# Spring Boot configuration
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    # For correct works with docker-compose, we need to change "localhost" to a service name, take from docker-compose.yml
+    url: jdbc:postgresql://db:5432/ohalo
+    username: postgres
+    password: postgres
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: create # When you launch the application for the first time - switch "update" at "create"
+    show-sql: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+# Logger configuration
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+  level:
+    org.springframework: error
+    org.hibernate: error
